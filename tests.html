@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>Tests</title><link rel="stylesheet" href="style.css">
+<script src="data.js"></script><script src="search.js"></script><script src="app.js"></script></head>
+<body><h2>Mini Google tests</h2><pre id="out"></pre><h3 id="sum"></h3>
+<script>
+var out = "", fails = 0, total = 0;
+function check(name, cond) {
+  total++; if (!cond) fails++;
+  out += (cond ? '<span class="pass">PASS</span> ' : '<span class="fail">FAIL</span> ') + name + "\n";
+}
+function ids(r) { return r.map(function (x) { return x.page.id; }).join(","); }
+function same(a, b) { return JSON.stringify(a) === JSON.stringify(b); }
+
+var L = keywordSearch("pizza"), R = pageRankSearch("pizza");
+check("pizza left order 6,4,2,1,3,5", ids(L) === "6,4,2,1,3,5");
+check("pizza left scores 10,3,2,1,1,1", same(L.map(function (x) { return x.score; }), [10, 3, 2, 1, 1, 1]));
+check("pizza right order 2,1,3,4,5,6", ids(R) === "2,1,3,4,5,6");
+var exp = [0.3929, 0.2132, 0.1920, 0.1066, 0.0703, 0.0250];
+check("pizza PageRank values", R.every(function (x, i) { return x.score.toFixed(4) === exp[i].toFixed(4); }));
+var sum = 0; for (var k in PR) sum += PR[k];
+check("PageRank sums to 1.0 (+-0.0001), got " + sum.toFixed(6), Math.abs(sum - 1) <= 0.0001);
+check("PageRank iterations <= 100 (" + PR_RESULT.iterations + ")", PR_RESULT.iterations <= 100);
+var dang = computePageRank([{id: 1, linksTo: [2]}, {id: 2, linksTo: []}]).ranks;
+check("dangling node handled, sums to 1", Math.abs(dang[1] + dang[2] - 1) < 1e-4);
+
+check("food left = 3,5 scores 1,1", ids(keywordSearch("food")) === "3,5" && keywordSearch("food").every(function (x) { return x.score === 1; }));
+check("food right = 3,5", ids(pageRankSearch("food")) === "3,5");
+check("pune left = 1", ids(keywordSearch("pune")) === "1");
+check("pune right = 1", ids(pageRankSearch("pune")) === "1");
+check("sushi left no-results message", paneHTML("left", "sushi").indexOf("did not match any documents") !== -1);
+check("sushi right no-results message", paneHTML("right", "sushi").indexOf("did not match any documents") !== -1);
+check("tokenize", same(tokenize("Hello, World-42!"), ["hello", "world", "42"]));
+
+document.getElementById("out").innerHTML = out;
+document.getElementById("sum").innerHTML = fails === 0 ? '<span class="pass">ALL ' + total + " TESTS PASS</span>" : '<span class="fail">' + fails + " of " + total + " FAILED</span>";
+</script></body></html>

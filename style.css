@@ -1,0 +1,18 @@
+body { background: #FFFFFF; color: #000000; font-family: "Times New Roman", Times, serif; margin: 8px; }
+a:link { color: #0000CC; text-decoration: underline; }
+a:visited { color: #551A8B; }
+.logo { font-family: "Times New Roman", Times, serif; font-weight: bold; }
+.snip { font-size: small; }
+.url { font-size: small; color: #008000; }
+.score { font-size: small; color: #666666; }
+.result { margin-top: 0; margin-bottom: 14px; }
+.bar { background: #6699FF; color: #000000; font-size: small; }
+.tag { font-size: small; color: #000000; }
+.foot { font-size: small; text-align: center; }
+input { border: 2px inset #C0C0C0; font-family: "Times New Roman", serif; }
+input.btn { border: 2px outset #DDDDDD; background: #C0C0C0; color: #000000; font-family: "Times New Roman", serif; }
+table.data { border-collapse: collapse; }
+table.data td, table.data th { border: 1px solid #000000; padding: 3px 8px; }
+pre { font-family: "Courier New", monospace; font-size: small; }
+.pass { color: #008000; }
+.fail { color: #CC0000; font-weight: bold; }

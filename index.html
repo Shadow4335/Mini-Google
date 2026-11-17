@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>Google!</title><link rel="stylesheet" href="style.css">
+<script src="data.js"></script><script src="search.js"></script><script src="app.js"></script></head>
+<body>
+<br><br>
+<table width="600" align="center" border="0" cellpadding="4"><tr><td align="center">
+<script>document.write(logoHTML(72));</script><br>
+<span class="tag"><i>Systems &amp; AI Lab</i> &nbsp;<b>BETA</b></span>
+<br><br>
+<form name="f" onsubmit="return go();">
+<input type="text" name="q" size="40" maxlength="256">
+<br><br>
+<span class="tag">Type a query and press Enter.</span>
+</form>
+<br>
+<span class="tag">Try searching: <a href="results.html?q=pizza">pizza</a> | <a href="results.html?q=pune">pune</a> | <a href="results.html?q=food">food</a> | <a href="results.html?q=canteen">canteen</a></span>
+</td></tr></table>
+<br><br><br>
+<p class="foot">Search only the 6 pages of the lab index.<br><a href="about.html">How it works</a></p>
+<p class="foot">Copyright &copy;1998 Google Inc.</p>
+<script>
+function go() {
+  location.href = "results.html?q=" + encodeURIComponent(document.f.q.value);
+  return false;
+}
+document.f.q.focus();
+</script>
+</body></html>

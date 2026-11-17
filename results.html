@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>Google Search Results</title><link rel="stylesheet" href="style.css">
+<script src="data.js"></script><script src="search.js"></script><script src="app.js"></script></head>
+<body>
+<table width="100%" cellpadding="4" border="0"><tr>
+<td width="180"><a href="index.html" style="text-decoration:none"><script>document.write(logoHTML(36));</script></a></td>
+<td><form action="results.html" method="get"><input type="text" name="q" size="40" id="qbox">
+<input class="btn" type="button" value="Google Search" onclick="location.href='index.html'"></form></td></tr></table>
+<div id="content"></div>
+<p class="foot"><a href="index.html">Home</a> | <a href="about.html">How it works</a><br>Copyright &copy;1998 Google Inc.</p>
+<script>
+var q = getParam("q"), id = getParam("id"), html;
+document.getElementById("qbox").value = q;
+if (id) {
+  html = cachedHTML(id, q);
+} else {
+  var nL = keywordSearch(q).length, nR = pageRankSearch(q).length;
+  html = '<table width="100%" cellpadding="3" border="0"><tr><td class="bar">Searched the web for <b>' + esc(q) +
+    "</b>. Results 1 - " + Math.max(nL, nR) + ".</td></tr></table>" +
+    '<table width="100%" cellpadding="8" border="0"><tr>' +
+    '<td width="50%" valign="top" style="border-right:1px solid #999999"><b>1998 Keyword Ranking (term frequency)</b><hr>' + paneHTML("left", q) + "</td>" +
+    '<td width="50%" valign="top"><b>PageRank Ranking</b><hr>' + paneHTML("right", q) + "</td></tr></table>";
+}
+document.getElementById("content").innerHTML = html;
+</script>
+</body></html>
